@@ -16,11 +16,17 @@ interface PanelConfiguration {
 }
 
 function parseSingleValue(res) {
+  console.log(res)
+
+  const value = res.data.result[0]?.value[1]
+
+  if (value === undefined) return []
+
   return [
     {
       timestamp: Date.now(),
-      //   value: Number(Number(res.data.result[0].value[1]).toFixed(2)),
-      value: Number((Math.random() * 20 + 20).toFixed(2)),
+      value: Number(Number().toFixed(2)),
+      // value: Number((Math.random() * 20 + 20).toFixed(2)),
     },
   ]
 }
@@ -29,7 +35,6 @@ function parseSingleValueAndAppend(res, data) {
   const singleValue = parseSingleValue(res)
   const result = data.concat(singleValue)
   if (result.length > 50) result.shift()
-
   return result
 }
 
@@ -40,7 +45,6 @@ function parseSingleValueAndAppend_generator(max_length = 50) {
         const singleValue = parseSingleValue(res)
         const result = data.concat(singleValue)
         if (result.length > max_length) result.shift()
-        // console.log(result)
         return result
       }
 }
@@ -57,7 +61,7 @@ const panels: PanelConfiguration[] = [
           parseSingleValue,
         ],
         render: DashboardGenerator({}),
-        interval: 5000,
+        // interval: 5000,
       },
       {
         title: '系统负载',
@@ -67,27 +71,27 @@ const panels: PanelConfiguration[] = [
           parseSingleValue,
         ],
         render: DashboardGenerator({}),
-        interval: 5000,
+        // interval: 5000,
       },
     ],
   },
-  {
-    title: 'Basic CPU/Mem/Net/Disk',
-    monitors: [
-      {
-        title: 'CPU 基础数值',
-        className: 'CPU_Basic display_rectangle medium',
-        query: [
-          `node_memory_Cached_bytes{} + node_memory_Buffers_bytes{}`,
-          parseSingleValueAndAppend_generator(10),
-          86400,
-          300,
-        ],
-        interval: 5000,
-        render: LineGenerator({ xIndex: 'timestamp', yIndex: 'value' }),
-      },
-    ],
-  },
+  // {
+  //   title: 'Basic CPU/Mem/Net/Disk',
+  //   monitors: [
+  //     {
+  //       title: 'CPU 基础数值',
+  //       className: 'CPU_Basic display_rectangle medium',
+  //       query: [
+  //         `node_memory_Cached_bytes{} + node_memory_Buffers_bytes{}`,
+  //         parseSingleValueAndAppend_generator(10),
+  //         86400,
+  //         300,
+  //       ],
+  //       interval: 5000,
+  //       render: LineGenerator({ xIndex: 'timestamp', yIndex: 'value' }),
+  //     },
+  //   ],
+  // },
 ]
 
 export default panels

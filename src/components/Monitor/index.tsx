@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Chart } from '@antv/g2'
 import { G2 } from '@/components'
 import { stringify } from 'querystring'
+import { fetchPrometheus } from '@/utils'
 
 type PrometheusHttpResponse = {
   status: 'success'
@@ -64,7 +65,7 @@ export default function Monitor(props: Props) {
 
       const responseParser = query[1]
 
-      fetch('/query?' + params)
+      fetchPrometheus(params)
         .then(res => res.json())
         .then(res => setData(d => responseParser(res, d)))
         .catch(err => console.error(err))
