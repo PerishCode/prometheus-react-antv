@@ -1,0 +1,24 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/.vscode": true,
+    "**/tsconfig.json": true,
+    "**/yarn.lock": true,
+    "**/node_modules": true,
+    "**/.gitignore": true,
+    "**/package.json": true,
+    "**/package-lock.json": true,
+    "**/.eslintcache": true,
+    "**/react-app-env.d.ts": true,
+    "**/config-overrides.js": true,
+    "**/tsconfig-paths.json": true,
+    "**/public": true,
+    "src/index.tsx": true,
+    "src/global.sass": true,
+    "**/README.md": true
+  }
+}
