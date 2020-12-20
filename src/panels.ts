@@ -16,16 +16,14 @@ interface PanelConfiguration {
 }
 
 function parseSingleValue(res) {
-  console.log(res)
-
-  const value = res.data.result[0]?.value[1]
+  const value = res.data.result[0]?.values[0][1]
 
   if (value === undefined) return []
 
   return [
     {
       timestamp: Date.now(),
-      value: Number(Number().toFixed(2)),
+      value: Number(Number(value).toFixed(2)),
       // value: Number((Math.random() * 20 + 20).toFixed(2)),
     },
   ]
@@ -75,23 +73,21 @@ const panels: PanelConfiguration[] = [
       },
     ],
   },
-  // {
-  //   title: 'Basic CPU/Mem/Net/Disk',
-  //   monitors: [
-  //     {
-  //       title: 'CPU 基础数值',
-  //       className: 'CPU_Basic display_rectangle medium',
-  //       query: [
-  //         `node_memory_Cached_bytes{} + node_memory_Buffers_bytes{}`,
-  //         parseSingleValueAndAppend_generator(10),
-  //         86400,
-  //         300,
-  //       ],
-  //       interval: 5000,
-  //       render: LineGenerator({ xIndex: 'timestamp', yIndex: 'value' }),
-  //     },
-  //   ],
-  // },
+  {
+    title: 'Basic CPU/Mem/Net/Disk',
+    monitors: [
+      {
+        title: 'CPU 基础数值',
+        className: 'CPU_Basic display_rectangle medium',
+        query: [
+          `avg(node_load5{}) /  count(count(node_cpu_seconds_total{}) by (cpu)) * 100`,
+          parseSingleValueAndAppend_generator(10),
+        ],
+        interval: 5000,
+        render: LineGenerator({ xIndex: 'timestamp', yIndex: 'value' }),
+      },
+    ],
+  },
 ]
 
 export default panels
