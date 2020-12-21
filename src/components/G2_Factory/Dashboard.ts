@@ -1,8 +1,12 @@
 import { RenderGenerator } from './types'
 
-interface Configuration {}
+interface Configuration {
+  label: string
+}
 
 const Dashboard: RenderGenerator<Configuration> = configuration => {
+  const { label } = configuration
+
   return chart => {
     chart.coordinate('polar', {
       startAngle: (-9 / 8) * Math.PI,
@@ -60,7 +64,7 @@ const Dashboard: RenderGenerator<Configuration> = configuration => {
 
     chart.annotation().text({
       position: ['50%', '75%'],
-      content: '数值',
+      content: label,
       style: {
         fontSize: 10,
         fill: '#000',

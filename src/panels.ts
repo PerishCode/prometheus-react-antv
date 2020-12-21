@@ -58,7 +58,7 @@ const panels: PanelConfiguration[] = [
           `(((count(count(node_cpu_seconds_total{}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle'}[5m])))) * 100) / count(count(node_cpu_seconds_total{}) by (cpu))`,
           parseSingleValue,
         ],
-        render: DashboardGenerator({}),
+        render: DashboardGenerator({ label: 'CPU占用率' }),
         // interval: 5000,
       },
       {
@@ -68,7 +68,7 @@ const panels: PanelConfiguration[] = [
           `avg(node_load5{}) /  count(count(node_cpu_seconds_total{}) by (cpu)) * 100`,
           parseSingleValue,
         ],
-        render: DashboardGenerator({}),
+        render: DashboardGenerator({ label: '系统负载' }),
         // interval: 5000,
       },
     ],
@@ -80,7 +80,9 @@ const panels: PanelConfiguration[] = [
         title: 'CPU 基础数值',
         className: 'CPU_Basic display_rectangle medium',
         query: [
-          `avg(node_load5{}) /  count(count(node_cpu_seconds_total{}) by (cpu)) * 100`,
+          // `avg(node_load5{}) /  count(count(node_cpu_seconds_total{}) by (cpu)) * 100`,
+          // `avg(node_load1{}) /  count(count(node_cpu_seconds_total{}) by (cpu)) * 100`,
+          `node_load1{}`,
           parseSingleValueAndAppend_generator(10),
         ],
         interval: 5000,
